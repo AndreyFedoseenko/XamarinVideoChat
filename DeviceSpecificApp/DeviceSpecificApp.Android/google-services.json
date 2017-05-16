@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "541610880089",
+    "firebase_url": "https://simplemessager.firebaseio.com",
+    "project_id": "simplemessager",
+    "storage_bucket": "simplemessager.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:541610880089:android:4d718ddd01aea57c",
+        "android_client_info": {
+          "package_name": "com.deviceSpecificApp.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "541610880089-mil2oeemu8vaulffj8q9irt7q1vd9g6e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.deviceSpecificApp.android",
+            "certificate_hash": "397dc08aae749c0777c28b6f8b27f820a23c648a"
+          }
+        },
+        {
+          "client_id": "541610880089-5n3m9p0bamdu7tcpg09n4icvnn2eqdb8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAijdHh0knlyEk5UR0yb6ofjJExjmRyPa0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "541610880089-5n3m9p0bamdu7tcpg09n4icvnn2eqdb8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

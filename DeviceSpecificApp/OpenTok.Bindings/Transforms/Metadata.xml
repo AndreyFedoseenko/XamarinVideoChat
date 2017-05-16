@@ -1,0 +1,18 @@
+﻿<metadata>
+  <remove-node path="/api/package[@name!='com.opentok.android']"/>
+
+  <add-node path="/api/package[@name='com.opentok.android']/class[@name='Stream']">
+    <method name="compareTo" return="int" abstract="false" native="false" synchronized="false" static="false" final="false"
+            deprecated="not deprecated" visibility="public">
+      <parameter name="o" type="java.lang.Object" />
+    </method>
+  </add-node>
+
+  <add-node path="/api/package[@name='com.opentok.android']/class[@name='Connection']">
+    <method name="compareTo" return="int" abstract="false" native="false" synchronized="false" static="false" final="false"
+            deprecated="not deprecated" visibility="public">
+      <parameter name="o" type="java.lang.Object" />
+    </method>
+  </add-node>
+</metadata>
+  

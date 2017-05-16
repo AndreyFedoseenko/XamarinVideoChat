@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:DeviceSpecificApp"
+             xmlns:controls="clr-namespace:DeviceSpecificApp.Controls;assembly=DeviceSpecificApp"
+             x:Class="DeviceSpecificApp.MainPage">
+    <StackLayout Orientation="Vertical">
+        <Button Text="Go to video" Clicked="Video_Clicked"/>
+        <StackLayout Orientation="Vertical">
+            <controls:SenderEntry x:Name="MessagesEntry" Placeholder="Send message" TextSended="MessagesEntry_TextSended"/>
+        </StackLayout>
+        <ListView x:Name="MessagesssList">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                            <StackLayout Orientation="Horizontal">
+                                <StackLayout Orientation="Vertical" HeightRequest="250" WidthRequest="180">
+                                    <Label Text="{Binding Email}" />
+                                    <Label Text="{Binding Message}" />
+                                </StackLayout>
+                                <Label Text="{Binding Time}" WidthRequest="120" />
+                                <Button Text="{Binding Phone}" Clicked="Call_Clicked"/>
+                            </StackLayout>
+                        </StackLayout>
+                        <!--<Grid VerticalOptions="FillAndExpand">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="130"/>
+                                <ColumnDefinition Width="130"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="250"/>
+                                <RowDefinition Height="250"/>
+                            </Grid.RowDefinitions>
+                            <Label Text="{Binding Email}" Grid.Row="0" Grid.Column="0" />
+                            <Label Text="{Binding Time}" Grid.Row="0" Grid.Column="1" />
+                            <Label Text="{Binding Message}" Grid.Row="1" Grid.Column="0" />
+                            <Button Text="{Binding Phone}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Clicked="Button_Clicked"/>
+                        </Grid>-->
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+
+</ContentPage>
