@@ -23,21 +23,6 @@
                                 <Button Text="{Binding Phone}" Clicked="Call_Clicked"/>
                             </StackLayout>
                         </StackLayout>
-                        <!--<Grid VerticalOptions="FillAndExpand">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="130"/>
-                                <ColumnDefinition Width="130"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="250"/>
-                                <RowDefinition Height="250"/>
-                            </Grid.RowDefinitions>
-                            <Label Text="{Binding Email}" Grid.Row="0" Grid.Column="0" />
-                            <Label Text="{Binding Time}" Grid.Row="0" Grid.Column="1" />
-                            <Label Text="{Binding Message}" Grid.Row="1" Grid.Column="0" />
-                            <Button Text="{Binding Phone}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" Clicked="Button_Clicked"/>
-                        </Grid>-->
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

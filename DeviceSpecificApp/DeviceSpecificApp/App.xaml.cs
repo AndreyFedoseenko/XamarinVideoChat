@@ -32,8 +32,6 @@ namespace DeviceSpecificApp
             {
                 var z = ex.Message;
             }
-
-            // MainPage = new NavigationPage(new MainPage());
         }
 
         protected override void OnSleep()

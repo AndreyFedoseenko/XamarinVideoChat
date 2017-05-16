@@ -20,7 +20,7 @@ namespace DeviceSpecificApp
 
         bool Call(string number);
 
-        void StardRecordVideo();
+        //void StardRecordVideo();
 
         Task ConnectToSession();
 

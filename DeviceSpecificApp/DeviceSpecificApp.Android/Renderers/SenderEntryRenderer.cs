@@ -21,7 +21,6 @@ namespace DeviceSpecificApp.Droid.Renderers
     public class SenderEntryRenderer : EntryRenderer
     {
         SenderEntry element;
-        //MainActivity mainActivity;
 
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {
@@ -34,8 +33,6 @@ namespace DeviceSpecificApp.Droid.Renderers
 
             element = (SenderEntry)this.Element;
 
-            //mainActivity = Forms.Context as MainActivity;
-
             var textField = this.Control;
             textField.EditorAction += HandleOKButton;
         }
@@ -47,8 +44,6 @@ namespace DeviceSpecificApp.Droid.Renderers
                 e.Handled = true;
                 element.OnTextSended();
                 element.Unfocus();
-                //var inputManager = (InputMethodManager)mainActivity.GetSystemService(Context.InputMethodService);
-                //inputManager.HideSoftInputFromWindow(((EditText)sender).WindowToken, HideSoftInputFlags.None);
             }
         }
     }

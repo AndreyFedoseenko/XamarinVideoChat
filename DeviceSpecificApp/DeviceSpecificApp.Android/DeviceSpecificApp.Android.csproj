@@ -234,9 +234,6 @@
       <Name>OpenTok.Bindings</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="sample.m4v" />
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

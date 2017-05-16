@@ -113,20 +113,19 @@ namespace DeviceSpecificApp.Droid
             return manager.PhoneType != PhoneType.None;
         }
 
-        public void StardRecordVideo()
-        {
-            string path = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/test.mp4";
-            mainActivity.Recorder = new MediaRecorder();
-            mainActivity.Recorder.SetVideoSource(VideoSource.Camera);
-            mainActivity.Recorder.SetAudioSource(AudioSource.Mic);
-            mainActivity.Recorder.SetOutputFormat(OutputFormat.Default);
-            mainActivity.Recorder.SetVideoEncoder(VideoEncoder.Default);
-            mainActivity.Recorder.SetAudioEncoder(AudioEncoder.Default);
-            mainActivity.Recorder.SetOutputFile(path);
-            // mainActivity.Recorder.SetPreviewDisplay(video.Holder.Surface);
-            mainActivity.Recorder.Prepare();
-            mainActivity.Recorder.Start();
-        }
+        //public void StardRecordVideo()
+        //{
+        //    string path = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/test.mp4";
+        //    mainActivity.Recorder = new MediaRecorder();
+        //    mainActivity.Recorder.SetVideoSource(VideoSource.Camera);
+        //    mainActivity.Recorder.SetAudioSource(AudioSource.Mic);
+        //    mainActivity.Recorder.SetOutputFormat(OutputFormat.Default);
+        //    mainActivity.Recorder.SetVideoEncoder(VideoEncoder.Default);
+        //    mainActivity.Recorder.SetAudioEncoder(AudioEncoder.Default);
+        //    mainActivity.Recorder.SetOutputFile(path);
+        //    mainActivity.Recorder.Prepare();
+        //    mainActivity.Recorder.Start();
+        //}
 
         public async System.Threading.Tasks.Task VideoCallSomeone()
         {

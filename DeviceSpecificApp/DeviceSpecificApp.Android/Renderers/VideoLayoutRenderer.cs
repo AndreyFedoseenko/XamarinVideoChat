@@ -32,10 +32,6 @@ namespace DeviceSpecificApp.Droid.Renderers
 
             var stackLayout = (VideoLayout)this.Element;
 
-            //mainActivity = Forms.Context as MainActivity;
-
-            // var stackLayout = this.Control;
-
             var mainActivity = Forms.Context as MainActivity;
 
             var publiserLayout = new Android.Widget.LinearLayout(mainActivity)

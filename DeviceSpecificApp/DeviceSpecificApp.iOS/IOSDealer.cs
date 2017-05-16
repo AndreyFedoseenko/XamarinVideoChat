@@ -104,10 +104,10 @@ namespace DeviceSpecificApp.iOS
 
         }
 
-        public void StardRecordVideo()
-        {
-            throw new NotImplementedException();
-        }
+        //public void StardRecordVideo()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public async Task VideoCallSomeone()
         {

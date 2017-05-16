@@ -20,7 +20,7 @@ namespace DeviceSpecificApp
         private async Task RegisterButton_Clicked(object sender, EventArgs e)
         {
             var dialer = DependencyService.Get<IDealer>();
-            // await dialer.Register(emailEntry.Text, passwordEntry.Text);
+            await dialer.Register(emailEntry.Text, passwordEntry.Text);
             await this.Navigation.PushAsync(new MainPage());
         }
     }
