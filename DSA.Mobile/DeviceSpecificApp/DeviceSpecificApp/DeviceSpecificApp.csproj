@@ -39,8 +39,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppConstants.cs" />
-    <Compile Include="AzureMediaServicesProvider.cs" />
     <Compile Include="Controls\VideoLayout.cs" />
     <Compile Include="IDealer.cs" />
     <Compile Include="MainPage.xaml.cs">
