@@ -10,6 +10,7 @@ using DeviceSpecificAppServerService.Models;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
+using DeviceSpecificAppServerService.Context;
 
 namespace FirebaseXamarinAppService.Controllers
 {

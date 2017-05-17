@@ -17,15 +17,9 @@ namespace DeviceSpecificApp
         public NetworkProvider()
         {
             this.client = new HttpClient();
-            this.client.BaseAddress = new Uri(this.BaseUrl);
+            this.client.BaseAddress = new Uri(AppValues.BaseServerUrl);
             this.client.DefaultRequestHeaders.Accept.Clear();
             this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        }
-
-
-        protected string BaseUrl
-        {
-            get { return "http://10.10.40.62/"; }
         }
 
 
@@ -33,7 +27,7 @@ namespace DeviceSpecificApp
         {
             try
             {
-                var response = await this.client.GetAsync(this.BaseUrl + "api/session");
+                var response = await this.client.GetAsync(AppValues.BaseServerUrl + "api/session");
                 if (response.IsSuccessStatusCode)
                 {
                     var data = await response.Content.ReadAsStringAsync();

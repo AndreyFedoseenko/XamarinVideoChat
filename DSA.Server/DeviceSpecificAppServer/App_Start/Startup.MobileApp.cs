@@ -7,8 +7,8 @@ using Microsoft.Azure.Mobile.Server;
 using Microsoft.Azure.Mobile.Server.Authentication;
 using Microsoft.Azure.Mobile.Server.Config;
 using DeviceSpecificAppServerService.DataObjects;
-using DeviceSpecificAppServerService.Models;
 using Owin;
+using DeviceSpecificAppServerService.Context;
 
 namespace DeviceSpecificAppServerService
 {

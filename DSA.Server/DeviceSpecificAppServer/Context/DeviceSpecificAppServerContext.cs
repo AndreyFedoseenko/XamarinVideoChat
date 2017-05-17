@@ -5,7 +5,7 @@ using Microsoft.Azure.Mobile.Server;
 using Microsoft.Azure.Mobile.Server.Tables;
 using DeviceSpecificAppServerService.DataObjects;
 
-namespace DeviceSpecificAppServerService.Models
+namespace DeviceSpecificAppServerService.Context
 {
     public class DeviceSpecificAppServerContext : DbContext
     {

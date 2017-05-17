@@ -91,6 +91,9 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="OpenTok, Version=2.3.5599.34963, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OpenTok.2.3.0\lib\net35\OpenTok.dll</HintPath>
+    </Reference>
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.Http">
       <SpecificVersion>False</SpecificVersion>
@@ -153,9 +156,13 @@
   <ItemGroup>
     <Compile Include="App_Start\Startup.MobileApp.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DataObjects\Message.cs" />
-    <Compile Include="Models\DeviceSpecificAppServerContext.cs" />
+    <Compile Include="Interfaces\IOpenToxProvider.cs" />
+    <Compile Include="Context\DeviceSpecificAppServerContext.cs" />
+    <Compile Include="Models\SessionInfo.cs" />
+    <Compile Include="Providers\OpenToxProvider.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -172,6 +179,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\PublishProfiles\DeviceSpecificAppServer - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\FirebaseXamarinApp - Web Deploy.pubxml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

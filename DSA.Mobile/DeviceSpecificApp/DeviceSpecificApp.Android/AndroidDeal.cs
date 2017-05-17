@@ -27,15 +27,13 @@ namespace DeviceSpecificApp.Droid
         FirebaseClient firebase;
         Action<List<MessageContent>> handler;
 
-        public static MainActivity mainActivity;
-
         public AndroidDeal()
         {
             firebase = new FirebaseClient("https://simplemessager.firebaseio.com/");
             try
             {
-                mainActivity.firebase = firebase;
-                FirebaseDatabase.Instance.GetReference("chats").AddValueEventListener(mainActivity);
+                MainActivity.CurrentActivity.firebase = firebase;
+                FirebaseDatabase.Instance.GetReference("chats").AddValueEventListener(MainActivity.CurrentActivity);
             }
             catch(Exception ex)
             {
@@ -46,7 +44,7 @@ namespace DeviceSpecificApp.Droid
 
         public void handleAddingMessages(Action<List<MessageContent>> handler)
         {
-            mainActivity.handler = handler;
+            MainActivity.CurrentActivity.handler = handler;
         }
 
         public bool IsAuthentificated()
@@ -77,7 +75,7 @@ namespace DeviceSpecificApp.Droid
 
         public async System.Threading.Tasks.Task DisplayChatMessage()
         {
-            await mainActivity.DisplayChatMessage();
+            await MainActivity.CurrentActivity.DisplayChatMessage();
         }
 
         public bool Call(string number)
@@ -129,17 +127,17 @@ namespace DeviceSpecificApp.Droid
 
         public async System.Threading.Tasks.Task VideoCallSomeone()
         {
-            await mainActivity.VideoCallSomeOne();
+            await MainActivity.CurrentActivity.VideoCallSomeOne();
         }
 
         public void RejectVideoCall()
         {
-            mainActivity.RejectVideoCall();
+            MainActivity.CurrentActivity.RejectVideoCall();
         }
 
         public async System.Threading.Tasks.Task ConnectToSession()
         {
-            await mainActivity.ConnectToSession();
+            await MainActivity.CurrentActivity.ConnectToSession();
         }
     }
      

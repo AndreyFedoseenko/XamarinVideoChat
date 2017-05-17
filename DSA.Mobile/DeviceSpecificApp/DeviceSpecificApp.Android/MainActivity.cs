@@ -39,6 +39,7 @@ namespace DeviceSpecificApp.Droid
         // Spinning wheel for loading subscriber view
         private ProgressBar _loadingSub;
         private bool isPublished;
+        private static MainActivity instance = null;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -53,8 +54,7 @@ namespace DeviceSpecificApp.Droid
             .SetDatabaseUrl("https://simplemessager.firebaseio.com/")
             // .SetGcmSenderId(GcmSenderId)
             .Build();
-
-            AndroidDeal.mainActivity = this;
+            instance = this;
 
             FirebaseApp.InitializeApp(this, options);
             VideoViewRenderer.Init();
@@ -321,6 +321,14 @@ namespace DeviceSpecificApp.Droid
 
         public void OnVideoDisabled(SubscriberKit p0)
         {
+        }
+
+        public static MainActivity CurrentActivity
+        {
+            get
+            {
+                return instance;
+            }
         }
     }
 }
