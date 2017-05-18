@@ -41,6 +41,7 @@
     </Compile>
     <Compile Include="AppValues.cs" />
     <Compile Include="Controls\VideoLayout.cs" />
+    <Compile Include="IAuthenticate.cs" />
     <Compile Include="IDealer.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

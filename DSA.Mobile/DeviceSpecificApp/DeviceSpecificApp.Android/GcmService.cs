@@ -131,18 +131,21 @@ namespace DeviceSpecificApp.Droid
             remoteView.SetTextViewText(Resource.Id.title, title);
             remoteView.SetTextViewText(Resource.Id.text, desc);
 
+            Intent acceptIntent = new Intent(MainActivity.CurrentActivity, MainActivity.CurrentActivity.Receiver.Class);
+            PendingIntent pendingAcceptIntent = PendingIntent.GetBroadcast(MainActivity.CurrentActivity, 0,
+            acceptIntent, 0);
+
+            remoteView.SetOnClickPendingIntent(Resource.Id.accept, pendingAcceptIntent);
+
             var notification = builder.SetContentIntent(PendingIntent.GetActivity(this, 0, uiIntent, 0))
                 .SetSmallIcon(Android.Resource.Drawable.SymActionEmail)
                 .SetTicker(title)
                 .SetContentTitle(title)
                 .SetCustomContentView(remoteView)
+                .SetContentIntent(null)
                 .SetContentText(desc)
                 .SetSound(RingtoneManager.GetDefaultUri(RingtoneType.Notification))
                 .SetAutoCancel(true).Build();
-
-            Intent switchIntent = new Intent(MainActivity.CurrentActivity, MainActivity.CurrentActivity.Class);
-            PendingIntent pendingSwitchIntent = PendingIntent.GetBroadcast(MainActivity.CurrentActivity, 0,
-            switchIntent, 0);
 
 
         var remView = notification.ContentView;

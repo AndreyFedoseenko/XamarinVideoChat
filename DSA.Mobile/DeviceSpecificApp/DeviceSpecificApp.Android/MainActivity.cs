@@ -18,6 +18,8 @@ using OpenToxServer;
 using Com.Opentok.Android;
 using Gcm.Client;
 using Microsoft.WindowsAzure.MobileServices;
+using DeviceSpecificApp.Droid.Listeners;
+using Android.Content;
 
 namespace DeviceSpecificApp.Droid
 {
@@ -43,6 +45,8 @@ namespace DeviceSpecificApp.Droid
         private bool isPublished;
         private static MainActivity instance = null;
         public MobileServiceClient MobileClient { get; private set; }
+
+        public AcceptInvitationListener Receiver { get; set; }
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -73,6 +77,8 @@ namespace DeviceSpecificApp.Droid
 
             this.MobileClient = new MobileServiceClient(AppValues.BaseServerUrl);
 
+            this.Receiver = new AcceptInvitationListener();
+
             isPublished = false;
 
             LoadApplication(new App());
@@ -94,6 +100,21 @@ namespace DeviceSpecificApp.Droid
             {
                 CreateAndShowDialog(e.Message, "Error");
             }
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            RegisterReceiver(Receiver, new IntentFilter());
+            // Code omitted for clarity
+        }
+
+
+        protected override void OnPause()
+        {
+            UnregisterReceiver(Receiver);
+            // Code omitted for clarity
+            base.OnPause();
         }
 
         protected override void OnStop()

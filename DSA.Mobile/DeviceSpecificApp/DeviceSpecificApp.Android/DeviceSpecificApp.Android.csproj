@@ -210,6 +210,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GcmService.cs" />
+    <Compile Include="Listeners\AcceptInvitationListener.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="AndroidDeal.cs" />
     <Compile Include="Renderers\VideoLayoutRenderer.cs" />
