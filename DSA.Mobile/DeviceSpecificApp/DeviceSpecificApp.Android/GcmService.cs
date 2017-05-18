@@ -13,6 +13,7 @@ using Gcm.Client;
 using Microsoft.WindowsAzure.MobileServices;
 using Newtonsoft.Json.Linq;
 using Android.Widget;
+using Android.Views;
 
 [assembly: Permission(Name = "@PACKAGE_NAME@.permission.C2D_MESSAGE")]
 [assembly: UsesPermission(Name = "@PACKAGE_NAME@.permission.C2D_MESSAGE")]
@@ -63,13 +64,13 @@ namespace DeviceSpecificApp.Droid
             string message = intent.Extras.GetString("message");
             if (!string.IsNullOrEmpty(message))
             {
-                CreateNotification("New todo item!", "Todo item: " + message);
+                CreateNotification("Somebody invite you to chat!", message);
                 return;
             }
             string msg2 = intent.Extras.GetString("msg");
             if (!string.IsNullOrEmpty(msg2))
             {
-                CreateNotification("New hub message", msg2);
+                CreateNotification("Somebody invite you to chat!", msg2);
                 return;
             }
             CreateNotification("Unknown message details", msg.ToString());
@@ -125,10 +126,16 @@ namespace DeviceSpecificApp.Droid
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
+            var remoteView = new RemoteViews(MainActivity.CurrentActivity.PackageName, Resource.Layout.custom_notification);
+            remoteView.SetImageViewResource(Resource.Id.notificationImage, Resource.Drawable.icon);
+            remoteView.SetTextViewText(Resource.Id.title, title);
+            remoteView.SetTextViewText(Resource.Id.text, desc);
+
             var notification = builder.SetContentIntent(PendingIntent.GetActivity(this, 0, uiIntent, 0))
                 .SetSmallIcon(Android.Resource.Drawable.SymActionEmail)
                 .SetTicker(title)
                 .SetContentTitle(title)
+                .SetCustomContentView(remoteView)
                 .SetContentText(desc)
                 .SetSound(RingtoneManager.GetDefaultUri(RingtoneType.Notification))
                 .SetAutoCancel(true).Build();
