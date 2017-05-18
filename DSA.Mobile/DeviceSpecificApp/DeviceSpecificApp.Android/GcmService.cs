@@ -28,7 +28,7 @@ namespace DeviceSpecificApp.Droid
     [IntentFilter(new string[] { Gcm.Client.Constants.INTENT_FROM_GCM_LIBRARY_RETRY }, Categories = new string[] { "@PACKAGE_NAME@" })]
     public class PushHandlerBroadcastReceiver : GcmBroadcastReceiverBase<GcmService>
     {
-        public static string[] SENDER_IDS = new string[] { "326406634031" };
+        public static string[] SENDER_IDS = new string[] { "541610880089" };
     }
 
     [Service]
@@ -85,9 +85,9 @@ namespace DeviceSpecificApp.Droid
             Log.Verbose("PushHandlerBroadcastReceiver", "GSM Registered: " + registrationId);
             RegistrationID = registrationId;
 
-            //var push = TodoItemManager.DefaultManager.CurrentClient.GetPush();
+            var push = MainActivity.CurrentActivity.MobileClient.GetPush();
 
-            //MainActivity.CurrentActivity.RunOnUiThread(() => Register(push,null));
+            MainActivity.CurrentActivity.RunOnUiThread(() => Register(push,null));
         }
 
         protected override void OnUnRegistered(Context context, string registrationId)

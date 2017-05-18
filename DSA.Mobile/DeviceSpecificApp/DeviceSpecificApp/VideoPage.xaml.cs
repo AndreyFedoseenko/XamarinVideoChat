@@ -16,8 +16,6 @@ namespace DeviceSpecificApp
     {
         private IPlaybackController PlaybackController => CrossMediaManager.Current.PlaybackController;
 
-        private NetworkProvider networkProvider;
-
         private IDealer dealer;
 
         public VideoPage()

@@ -12,6 +12,7 @@ using System.Web.Http;
 namespace OpenToxWebServerApi.Controllers
 {
     [MobileAppController]
+    [Route("/api/session")]
     public class SessionController : ApiController
     {
         private readonly IOpenToxProvider provider;
@@ -20,6 +21,8 @@ namespace OpenToxWebServerApi.Controllers
         {
             provider = new OpenToxProvider();
         }
+
+        [HttpGet]
         // GET api/values
         public IHttpActionResult Get()
         {

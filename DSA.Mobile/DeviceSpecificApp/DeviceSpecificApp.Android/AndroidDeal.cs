@@ -17,6 +17,7 @@ using Android.Views;
 using Android.Views.InputMethods;
 using Android.App;
 using Android.Media;
+using Microsoft.WindowsAzure.MobileServices;
 
 [assembly: Dependency(typeof(AndroidDeal))]
 namespace DeviceSpecificApp.Droid
@@ -57,6 +58,7 @@ namespace DeviceSpecificApp.Droid
             try
             {
                 await auth.SignInWithEmailAndPasswordAsync(email, password);
+                var user = await MainActivity.CurrentActivity.MobileClient.LoginAsync(MainActivity.CurrentActivity, MobileServiceAuthenticationProvider.WindowsAzureActiveDirectory);
             }
             catch(Exception ex)
             {
@@ -97,7 +99,7 @@ namespace DeviceSpecificApp.Droid
 
         }
 
-        public static bool IsIntentAvailable(Context context, Intent intent)
+        private static bool IsIntentAvailable(Context context, Intent intent)
         {
             var packageManager = context.PackageManager;
 

@@ -27,7 +27,7 @@ namespace DeviceSpecificApp
         {
             try
             {
-                var response = await this.client.GetAsync(AppValues.BaseServerUrl + "api/session");
+                var response = await this.client.GetAsync(AppValues.BaseServerUrl + "/api/session");
                 if (response.IsSuccessStatusCode)
                 {
                     var data = await response.Content.ReadAsStringAsync();

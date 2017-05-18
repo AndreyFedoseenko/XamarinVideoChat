@@ -16,6 +16,8 @@ using Android.Media;
 using System.Threading.Tasks;
 using OpenToxServer;
 using Com.Opentok.Android;
+using Gcm.Client;
+using Microsoft.WindowsAzure.MobileServices;
 
 namespace DeviceSpecificApp.Droid
 {
@@ -40,6 +42,7 @@ namespace DeviceSpecificApp.Droid
         private ProgressBar _loadingSub;
         private bool isPublished;
         private static MainActivity instance = null;
+        public MobileServiceClient MobileClient { get; private set; }
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -66,9 +69,31 @@ namespace DeviceSpecificApp.Droid
 
             this.networkProvider = new NetworkProvider();
 
+            this.networkProvider.GetSessionInfo();
+
+            this.MobileClient = new MobileServiceClient(AppValues.BaseServerUrl);
+
             isPublished = false;
 
             LoadApplication(new App());
+
+            try
+            {
+                GcmClient.CheckDevice(this);
+                GcmClient.CheckManifest(this);
+
+                System.Diagnostics.Debug.WriteLine("Registering...");
+
+                GcmClient.Register(this, PushHandlerBroadcastReceiver.SENDER_IDS);
+            }
+            catch (Java.Net.MalformedURLException)
+            {
+                CreateAndShowDialog("There was an error creating the client.Verify the URL.", "Error");
+            }
+            catch (Exception e)
+            {
+                CreateAndShowDialog(e.Message, "Error");
+            }
         }
 
         protected override void OnStop()
@@ -329,6 +354,14 @@ namespace DeviceSpecificApp.Droid
             {
                 return instance;
             }
+        }
+
+        private void CreateAndShowDialog(string message, string title)
+        {
+            var builder = new AlertDialog.Builder(this);
+            builder.SetMessage(message);
+            builder.SetTitle(title);
+            builder.Create().Show();
         }
     }
 }

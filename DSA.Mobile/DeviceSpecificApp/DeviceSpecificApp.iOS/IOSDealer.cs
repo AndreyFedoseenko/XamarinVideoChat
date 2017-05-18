@@ -11,6 +11,7 @@ using DeviceSpecificApp.iOS;
 using Firebase.Xamarin.Auth;
 using Foundation;
 using UIKit;
+using Microsoft.WindowsAzure.MobileServices;
 
 [assembly: Dependency(typeof(IOSDealer))]
 namespace DeviceSpecificApp.iOS
@@ -20,10 +21,12 @@ namespace DeviceSpecificApp.iOS
         Auth auth;
         FirebaseClient firebase;
         Action<List<MessageContent>> handler;
+        MobileServiceClient client;
 
         public IOSDealer()
         {
             firebase = new FirebaseClient("https://simplemessager.firebaseio.com/");
+            this.client = new MobileServiceClient(AppValues.BaseServerUrl);
             try
             {
                 Database.DefaultInstance.GetRootReference().GetChild("chats").ObserveEvent(DataEventType.Value, async (snapshot) =>
@@ -87,6 +90,7 @@ namespace DeviceSpecificApp.iOS
                 {
                     var usr = Auth.DefaultInstance.CurrentUser;
                 });
+                var azureUser = await client.LoginAsync(UIApplication.SharedApplication.KeyWindow.RootViewController, MobileServiceAuthenticationProvider.WindowsAzureActiveDirectory);
             }
             catch (Exception ex)
             {
