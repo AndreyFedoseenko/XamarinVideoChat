@@ -29,5 +29,6 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/notificationImage"
         android:layout_below="@id/text"
-        android:text="Accept" />
+        android:text="Accept"
+        android:textSize="@dimen/abc_action_bar_default_padding_end_material" />
 </RelativeLayout>

@@ -22,7 +22,6 @@ build/
 **/.vs/
 **/packages
 **/AboutResources.txt
-**/Resource.Designer.cs
 **/lib
 **/PublishProfiles
 *.min.*
