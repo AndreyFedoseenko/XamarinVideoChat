@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:DeviceSpecificApp"
+             xmlns:controls="clr-namespace:DeviceSpecificApp.Controls;assembly=DeviceSpecificApp"
+             x:Class="DeviceSpecificApp.ChatPage">
+    <StackLayout Orientation="Vertical">
+        <Button Text="Go to video" Clicked="Video_Clicked"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Entry Grid.Column="0" x:Name="InvitationEntry" Placeholder="Enter email" WidthRequest="200"/>
+            <Button Grid.Column="1" Clicked="InvitePerson" Text="Invite"/>
+        </Grid>
+        <StackLayout Orientation="Vertical">
+            <controls:SenderEntry x:Name="MessagesEntry" Placeholder="Send message" TextSended="MessagesEntry_TextSended"/>
+        </StackLayout>
+        <ListView x:Name="MessagesssList">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                            <StackLayout Orientation="Horizontal">
+                                <StackLayout Orientation="Vertical" HeightRequest="250" WidthRequest="180">
+                                    <Label Text="{Binding SenderEmail}" />
+                                    <Label Text="{Binding Text}" />
+                                </StackLayout>
+                                <Label Text="{Binding Time}" WidthRequest="120" />
+                                <Button Text="{Binding Phone}" Clicked="Call_Clicked"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

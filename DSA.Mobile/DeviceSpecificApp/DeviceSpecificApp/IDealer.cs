@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DeviceSpecificApp.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,9 @@ namespace DeviceSpecificApp
 {
     public interface IDealer
     {
-        Task Register(string email, string password);
+        Task<bool> Register(string email, string password);
+
+        string GetRegistrationId();
 
         Task SendMessage(string message);
 
@@ -27,5 +30,7 @@ namespace DeviceSpecificApp
         Task VideoCallSomeone();
 
         void RejectVideoCall();
+
+        void SetUpMessageHandler(Action handler);
     }
 }

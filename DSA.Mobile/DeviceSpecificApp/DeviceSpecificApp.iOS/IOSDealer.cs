@@ -12,6 +12,7 @@ using Firebase.Xamarin.Auth;
 using Foundation;
 using UIKit;
 using Microsoft.WindowsAzure.MobileServices;
+using DeviceSpecificApp.Model;
 
 [assembly: Dependency(typeof(IOSDealer))]
 namespace DeviceSpecificApp.iOS
@@ -126,6 +127,21 @@ namespace DeviceSpecificApp.iOS
         public async Task ConnectToSession()
         {
             AppDelegate.SelfDelegate.VideoProvider.DoConnect();
+        }
+
+        Task<bool> IDealer.Register(string email, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetUpMessageHandler(Action handler)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetRegistrationId()
+        {
+            throw new NotImplementedException();
         }
     }
 }

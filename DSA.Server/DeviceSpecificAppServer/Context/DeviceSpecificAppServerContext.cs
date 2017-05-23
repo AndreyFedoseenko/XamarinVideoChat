@@ -22,7 +22,11 @@ namespace DeviceSpecificAppServerService.Context
         {
         } 
 
-        public DbSet<Message> TodoItems { get; set; }
+        public DbSet<User> Users { get; set; }
+
+        public DbSet<Chat> Chats { get; set; }
+
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -5,8 +5,8 @@ using OpenTok;
 using System.Drawing;
 using DeviceSpecificApp.iOS.StreamingDelegate;
 using UIKit;
-using OpenToxServer;
 using System.Diagnostics;
+using DeviceSpecificApp.Model;
 
 namespace DeviceSpecificApp.iOS.Providers
 {
@@ -17,8 +17,6 @@ namespace DeviceSpecificApp.iOS.Providers
         public OTSubscriber _subscriber;
 
         private SessionInfo session;
-
-        private NetworkProvider networkProvider;
 
         public EventHandler OnHangup;
         public EventHandler<OnErrorEventArgs> OnError;
@@ -42,7 +40,6 @@ namespace DeviceSpecificApp.iOS.Providers
 
                 this.ShowAlert(e.Message);
             };
-            this.networkProvider = new NetworkProvider();
         }
 
         public void SetLayuots(UIStackView publisherLayout, UIStackView subscriberLayout)
@@ -55,7 +52,7 @@ namespace DeviceSpecificApp.iOS.Providers
         {
             OTError error;
 
-            //var session = await this.networkProvider.GetSessionInfo();
+            //var session = await App.NetworkProvider.GetSessionInfo();
             session = new SessionInfo()
             {
                 ApiKey = 45842692,

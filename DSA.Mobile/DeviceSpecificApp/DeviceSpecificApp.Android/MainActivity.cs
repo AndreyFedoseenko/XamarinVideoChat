@@ -14,12 +14,13 @@ using System.Linq;
 using Plugin.MediaManager.Forms.Android;
 using Android.Media;
 using System.Threading.Tasks;
-using OpenToxServer;
 using Com.Opentok.Android;
 using Gcm.Client;
 using Microsoft.WindowsAzure.MobileServices;
 using DeviceSpecificApp.Droid.Listeners;
 using Android.Content;
+using DeviceSpecificApp.Model;
+using DeviceSpecificApp.Providers;
 
 namespace DeviceSpecificApp.Droid
 {
@@ -44,8 +45,6 @@ namespace DeviceSpecificApp.Droid
         private ProgressBar _loadingSub;
         private bool isPublished;
         private static MainActivity instance = null;
-        public MobileServiceClient MobileClient { get; private set; }
-
         public AcceptInvitationListener Receiver { get; set; }
 
         protected override void OnCreate(Bundle bundle)
@@ -71,11 +70,7 @@ namespace DeviceSpecificApp.Droid
             var layoutParams = new LinearLayout.LayoutParams(
                        Resources.DisplayMetrics.WidthPixels, Resources.DisplayMetrics.HeightPixels);
 
-            this.networkProvider = new NetworkProvider();
-
-            this.networkProvider.GetSessionInfo();
-
-            this.MobileClient = new MobileServiceClient(AppValues.BaseServerUrl);
+            //App.NetworkProvider.GetSessionInfo();
 
             this.Receiver = new AcceptInvitationListener();
 
@@ -91,6 +86,8 @@ namespace DeviceSpecificApp.Droid
                 System.Diagnostics.Debug.WriteLine("Registering...");
 
                 GcmClient.Register(this, PushHandlerBroadcastReceiver.SENDER_IDS);
+                var isRegistered = GcmClient.IsRegistered(this);
+                var isOnServerRegistered = GcmClient.IsRegisteredOnServer(this);
             }
             catch (Java.Net.MalformedURLException)
             {

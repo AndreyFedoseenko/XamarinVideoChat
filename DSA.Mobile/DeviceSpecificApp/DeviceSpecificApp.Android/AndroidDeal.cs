@@ -18,6 +18,8 @@ using Android.Views.InputMethods;
 using Android.App;
 using Android.Media;
 using Microsoft.WindowsAzure.MobileServices;
+using Newtonsoft.Json.Linq;
+using DeviceSpecificApp.Model;
 
 [assembly: Dependency(typeof(AndroidDeal))]
 namespace DeviceSpecificApp.Droid
@@ -27,6 +29,7 @@ namespace DeviceSpecificApp.Droid
         FirebaseAuth auth;
         FirebaseClient firebase;
         Action<List<MessageContent>> handler;
+        public static Action AcceptInvitationMessageHandler { get; private set; }
 
         public AndroidDeal()
         {
@@ -53,17 +56,20 @@ namespace DeviceSpecificApp.Droid
             return FirebaseAuth.Instance.CurrentUser != null;
         }
 
-        public async System.Threading.Tasks.Task Register(string email, string password)
+        public async System.Threading.Tasks.Task<bool> Register(string email, string password)
         {
             try
             {
-                await auth.SignInWithEmailAndPasswordAsync(email, password);
-                var user = await MainActivity.CurrentActivity.MobileClient.LoginAsync(MainActivity.CurrentActivity, MobileServiceAuthenticationProvider.WindowsAzureActiveDirectory);
+                //await auth.SignInWithEmailAndPasswordAsync(email, password);
+                //var user = await MainActivity.CurrentActivity.MobileClient.LoginAsync(MainActivity.CurrentActivity, MobileServiceAuthenticationProvider.WindowsAzureActiveDirectory);
+                //var user = await MainActivity.CurrentActivity.MobileClient.LoginAsync(MainActivity.CurrentActivity, MobileServiceAuthenticationProvider.WindowsAzureActiveDirectory);
+                //return FirebaseAuth.Instance.CurrentUser != null;
+                //GcmService.RegisterTagOnServer(email);
             }
             catch(Exception ex)
             {
-                var z = ex.Message;
             }
+            return false;
         }
 
         public async System.Threading.Tasks.Task SendMessage(string message)
@@ -113,20 +119,6 @@ namespace DeviceSpecificApp.Droid
             return manager.PhoneType != PhoneType.None;
         }
 
-        //public void StardRecordVideo()
-        //{
-        //    string path = Android.OS.Environment.ExternalStorageDirectory.AbsolutePath + "/test.mp4";
-        //    mainActivity.Recorder = new MediaRecorder();
-        //    mainActivity.Recorder.SetVideoSource(VideoSource.Camera);
-        //    mainActivity.Recorder.SetAudioSource(AudioSource.Mic);
-        //    mainActivity.Recorder.SetOutputFormat(OutputFormat.Default);
-        //    mainActivity.Recorder.SetVideoEncoder(VideoEncoder.Default);
-        //    mainActivity.Recorder.SetAudioEncoder(AudioEncoder.Default);
-        //    mainActivity.Recorder.SetOutputFile(path);
-        //    mainActivity.Recorder.Prepare();
-        //    mainActivity.Recorder.Start();
-        //}
-
         public async System.Threading.Tasks.Task VideoCallSomeone()
         {
             await MainActivity.CurrentActivity.VideoCallSomeOne();
@@ -141,65 +133,15 @@ namespace DeviceSpecificApp.Droid
         {
             await MainActivity.CurrentActivity.ConnectToSession();
         }
+
+        public void SetUpMessageHandler(Action handler)
+        {
+            AcceptInvitationMessageHandler = handler;
+        }
+
+        public string GetRegistrationId()
+        {
+            return GcmService.RegistrationID;
+        }
     }
-     
-
-    //class DatachangedEventListener : Java.Lang.Object,IValueEventListener
-    //{
-    //    FirebaseClient firebase;
-    //    Action<List<MessageContent>> handler;
-
-    //    public DatachangedEventListener(FirebaseClient firebase, Action<List<MessageContent>> handler)
-    //    {
-    //        this.firebase = firebase;
-    //        this.handler = handler;
-    //    }
-
-    //    public IntPtr Handle => this.Handle;
-
-    //    public void Dispose()
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-
-    //    public void OnCancelled(DatabaseError error)
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-
-    //    public async void OnDataChange(DataSnapshot snapshot)
-    //    {
-    //        await DisplayChatMessage();
-    //    }
-
-    //    private async System.Threading.Tasks.Task DisplayChatMessage()
-    //    {
-    //        var items = await firebase.Child("chats")
-    //            .OnceAsync<MessageContent>();
-
-    //        handler(items.Select(x => new MessageContent {
-    //            Email = x.Object.Email,
-    //            Message = x.Object.Message,
-    //            Phone = x.Object.Phone
-    //        }).ToList());
-    //    }
-    //}
-
-    ////class OnRegisterFinishListener : IOnCompleteListener
-    ////{
-    ////    public IntPtr Handle => throw new NotImplementedException();
-
-    ////    public void Dispose()
-    ////    {
-    ////        throw new NotImplementedException();
-    ////    }
-
-    ////    public void OnComplete(Task task)
-    ////    {
-    ////        if (task.IsSuccessful)
-    ////        {
-    ////            Toast.MakeText(, "SighInSucsessfully!", ToastLength.Short);
-    ////        }
-    ////    }
-    ////}
 }

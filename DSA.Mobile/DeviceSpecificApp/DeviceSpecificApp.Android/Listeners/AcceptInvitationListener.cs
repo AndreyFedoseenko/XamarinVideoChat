@@ -16,9 +16,11 @@ namespace DeviceSpecificApp.Droid.Listeners
     [BroadcastReceiver(Enabled = true, Exported = true)]
     public class AcceptInvitationListener : BroadcastReceiver
     {
-        public override void OnReceive(Context context, Intent intent)
+        public override async void OnReceive(Context context, Intent intent)
         {
-            Debugger.Break();
+            var sender = intent.Extras.GetString("sender");
+            var chat = intent.Extras.GetString("chat");
+            await MainPage.Instance.AcceptInvitation(sender, chat);
         }
     }
 }

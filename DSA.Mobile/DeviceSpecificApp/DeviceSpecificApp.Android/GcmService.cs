@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Diagnostics;
 
@@ -13,7 +12,7 @@ using Gcm.Client;
 using Microsoft.WindowsAzure.MobileServices;
 using Newtonsoft.Json.Linq;
 using Android.Widget;
-using Android.Views;
+using DeviceSpecificApp.Model;
 
 [assembly: Permission(Name = "@PACKAGE_NAME@.permission.C2D_MESSAGE")]
 [assembly: UsesPermission(Name = "@PACKAGE_NAME@.permission.C2D_MESSAGE")]
@@ -61,24 +60,34 @@ namespace DeviceSpecificApp.Droid
             edit.PutString("last_msg", msg.ToString());
             edit.Commit();
 
-            string message = intent.Extras.GetString("message");
-            if (!string.IsNullOrEmpty(message))
+            var isInvitation = intent.Extras.GetString("isInvitation");
+            var sender = intent.Extras.GetString("sender");
+            var chat = intent.Extras.GetString("chat");
+
+            if (!string.IsNullOrEmpty(isInvitation) && Convert.ToBoolean(isInvitation))
             {
-                CreateNotification("Somebody invite you to chat!", message);
+                CreateInvitationNotification(sender, chat);
                 return;
             }
-            string msg2 = intent.Extras.GetString("msg");
-            if (!string.IsNullOrEmpty(msg2))
+
+            var text = intent.Extras.GetString("text");
+            var message = new MessageInfo()
             {
-                CreateNotification("Somebody invite you to chat!", msg2);
-                return;
-            }
-            CreateNotification("Unknown message details", msg.ToString());
+                SenderEmail = sender,
+                ChatName = chat,
+                Text = text
+            };
+            App.ReceiveMessage(message);
+
         }
 
         protected override void OnError(Context context, string errorId)
         {
             Log.Error("PushHandlerBroadcastReceiver", "GCM Error: " + errorId);
+        }
+        protected override bool OnRecoverableError(Context context, string errorId)
+        {
+            return true;
         }
 
         protected override void OnRegistered(Context context, string registrationId)
@@ -86,7 +95,7 @@ namespace DeviceSpecificApp.Droid
             Log.Verbose("PushHandlerBroadcastReceiver", "GSM Registered: " + registrationId);
             RegistrationID = registrationId;
 
-            var push = MainActivity.CurrentActivity.MobileClient.GetPush();
+            var push = App.MobileClient.GetPush();
 
             MainActivity.CurrentActivity.RunOnUiThread(() => Register(push,null));
         }
@@ -100,7 +109,7 @@ namespace DeviceSpecificApp.Droid
         {
             try
             {
-                const string templateBodyGCM = "{\"data\":{\"message\":\"$(messageParam)\"}}";
+                const string templateBodyGCM = "{\"data\":{\"sender\":\"$(senderParam)\",\"chat\":\"$(chatParam)\", \"receiver\":\"$(receiverParam)\", \"isInvitation\":\"$(isInvitationParam)\", \"text\":\"$(textParam)\" }}";
 
                 var templates = new JObject();
                 templates["genericMessage"] = new JObject
@@ -118,7 +127,7 @@ namespace DeviceSpecificApp.Droid
             }
         }
 
-        void CreateNotification(string title,string desc)
+        void CreateInvitationNotification(string sender, string chat)
         {
             var notificationManager = GetSystemService(Context.NotificationService) as NotificationManager;
 
@@ -126,12 +135,15 @@ namespace DeviceSpecificApp.Droid
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
 
+            string title = "Invitation!";
             var remoteView = new RemoteViews(MainActivity.CurrentActivity.PackageName, Resource.Layout.custom_notification);
             remoteView.SetImageViewResource(Resource.Id.notificationImage, Resource.Drawable.icon);
             remoteView.SetTextViewText(Resource.Id.title, title);
-            remoteView.SetTextViewText(Resource.Id.text, desc);
+            remoteView.SetTextViewText(Resource.Id.text, string.Format("{0} invite you to chat: {1}!",sender,chat));
 
             Intent acceptIntent = new Intent(MainActivity.CurrentActivity, MainActivity.CurrentActivity.Receiver.Class);
+            acceptIntent.PutExtra("sender", sender);
+            acceptIntent.PutExtra("chat", chat);
             PendingIntent pendingAcceptIntent = PendingIntent.GetBroadcast(MainActivity.CurrentActivity, 0,
             acceptIntent, 0);
 
@@ -143,7 +155,6 @@ namespace DeviceSpecificApp.Droid
                 .SetContentTitle(title)
                 .SetCustomContentView(remoteView)
                 .SetContentIntent(null)
-                .SetContentText(desc)
                 .SetSound(RingtoneManager.GetDefaultUri(RingtoneType.Notification))
                 .SetAutoCancel(true).Build();
 

@@ -8,5 +8,6 @@
         <Label>Enter your password:</Label>
         <Entry x:Name="passwordEntry" Placeholder="Enter your password!" IsPassword="True"/>
         <Button x:Name="RegisterButton" Text="Register" Clicked="RegisterButton_Clicked"/>
+        <Label x:Name="ValidationLabel" IsVisible="False">Please, enter correct data!</Label>
     </StackLayout>
 </ContentPage>

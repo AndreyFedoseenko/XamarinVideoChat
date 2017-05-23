@@ -5,27 +5,15 @@
              xmlns:controls="clr-namespace:DeviceSpecificApp.Controls;assembly=DeviceSpecificApp"
              x:Class="DeviceSpecificApp.MainPage">
     <StackLayout Orientation="Vertical">
-        <Button Text="Go to video" Clicked="Video_Clicked"/>
-        <StackLayout Orientation="Vertical">
-            <controls:SenderEntry x:Name="MessagesEntry" Placeholder="Send message" TextSended="MessagesEntry_TextSended"/>
-        </StackLayout>
-        <ListView x:Name="MessagesssList">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <StackLayout Orientation="Vertical" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-                            <StackLayout Orientation="Horizontal">
-                                <StackLayout Orientation="Vertical" HeightRequest="250" WidthRequest="180">
-                                    <Label Text="{Binding Email}" />
-                                    <Label Text="{Binding Message}" />
-                                </StackLayout>
-                                <Label Text="{Binding Time}" WidthRequest="120" />
-                                <Button Text="{Binding Phone}" Clicked="Call_Clicked"/>
-                            </StackLayout>
-                        </StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Entry Grid.Column="0" x:Name="ChatCreationEntry" Placeholder="Enter chat name" WidthRequest="200"/>
+            <Button Grid.Column="1" Clicked="CreateChat" Text="Create"/>
+        </Grid>
+        <ListView x:Name="ChatList">
         </ListView>
     </StackLayout>
 

@@ -9,8 +9,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FirebaseXamarinAppService</RootNamespace>
-    <AssemblyName>FirebaseXamarinAppService</AssemblyName>
+    <RootNamespace>DeviseSpecificAppServer</RootNamespace>
+    <AssemblyName>DeviseSpecificAppServer</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -60,6 +60,15 @@
     </VisualStudio>
   </ProjectExtensions>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=3.3.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.3.3.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=3.4.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Windsor.3.4.0\lib\net45\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Mobile.Server.Login, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.Mobile.Server.Login.2.0.0\lib\net46\Microsoft.Azure.Mobile.Server.Login.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Azure.NotificationHubs, Version=2.16.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.NotificationHubs.1.0.7\lib\net45-full\Microsoft.Azure.NotificationHubs.dll</HintPath>
       <Private>True</Private>
@@ -155,13 +164,31 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\Startup.MobileApp.cs" />
-    <Compile Include="Controllers\MessagesController.cs" />
-    <Compile Include="Controllers\SessionController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Castle\WindsorDependencyResolver.cs" />
+    <Compile Include="Castle\WindsorDependencyScope .cs" />
+    <Compile Include="Castle\WindsorInstaller.cs" />
+    <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
+    <Compile Include="DataObjects\Chat.cs" />
     <Compile Include="DataObjects\Message.cs" />
+    <Compile Include="Interfaces\INotificationsProvider.cs" />
+    <Compile Include="Migrations\201705220733398_AddChats.cs" />
+    <Compile Include="Migrations\201705220733398_AddChats.Designer.cs">
+      <DependentUpon>201705220733398_AddChats.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AddTagModel.cs" />
+    <Compile Include="Models\Invitation.cs" />
     <Compile Include="Interfaces\IOpenToxProvider.cs" />
     <Compile Include="Context\DeviceSpecificAppServerContext.cs" />
+    <Compile Include="Models\LoginResult.cs" />
+    <Compile Include="Models\LoginResultUser.cs" />
+    <Compile Include="Models\MessageInfo.cs" />
     <Compile Include="Models\SessionInfo.cs" />
+    <Compile Include="DataObjects\User.cs" />
+    <Compile Include="Models\UserChatModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Providers\NotificationsProvider.cs" />
     <Compile Include="Providers\OpenToxProvider.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -179,8 +206,12 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Migrations\201705220733398_AddChats.resx">
+      <DependentUpon>201705220733398_AddChats.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Properties\PublishProfiles\DeviceSpecificAppServer - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\FirebaseXamarinApp - Web Deploy.pubxml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

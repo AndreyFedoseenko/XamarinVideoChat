@@ -1,7 +1,9 @@
-﻿using Plugin.MediaManager;
+﻿using DeviceSpecificApp.Model;
+using Plugin.MediaManager;
 using Plugin.MediaManager.Abstractions.Enums;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,41 +15,49 @@ namespace DeviceSpecificApp
     {
         IDealer dialer;
 
+        ObservableCollection<string> chats;
+
+        public static MainPage Instance { get; private set; }
+
         public MainPage()
         {
             InitializeComponent();
-            MessagesssList.ItemsSource = new List<MessageContent>();
-            this.dialer = DependencyService.Get<IDealer>();
-            dialer.handleAddingMessages(HandleChangeData);
-            dialer.DisplayChatMessage();
+            chats = new ObservableCollection<string>();
+            ChatList.ItemSelected += ChatChoiced;
+            Instance = this;
         }
 
-        private void HandleChangeData(List<MessageContent> mess)
+        public async Task AcceptInvitation(string sender, string chat)
         {
-            MessagesssList.ItemsSource = mess;
+            var isAccepted = await App.NetworkProvider.AcceptInvitation(chat, sender);
+            if (isAccepted)
+            {
+                chats.Add(chat);
+                ChatList.ItemsSource = chats;
+            }
         }
 
-        private async void SendMessage_Clicked(object sender, EventArgs e)
+        protected override async void OnAppearing()
         {
-            await dialer.SendMessage(MessagesEntry.Text);
-            MessagesEntry.Text = "";
+            var chatList = await App.NetworkProvider.GetChats();
+            chats = new ObservableCollection<string>(chatList);
+            ChatList.ItemsSource = chats;
         }
 
-        private void Call_Clicked(object sender, EventArgs e)
+        private async void CreateChat(object sender, EventArgs e)
         {
-            var number = ((Button)sender).Text;
-            var result = dialer.Call(number);
+            var isCreated = await App.NetworkProvider.CreateChat(ChatCreationEntry.Text);
+            if (isCreated)
+            {
+                chats.Add(ChatCreationEntry.Text);
+                ChatList.ItemsSource = chats;
+                ChatCreationEntry.Text = "";
+            }
         }
 
-        private async void Video_Clicked(object sender, EventArgs e)
+        private void ChatChoiced(object sender, SelectedItemChangedEventArgs e)
         {
-            await this.Navigation.PushAsync(new VideoPage());
-        }
-
-        private async void MessagesEntry_TextSended(object sender, EventArgs e)
-        {
-            await dialer.SendMessage(MessagesEntry.Text);
-            MessagesEntry.Text = "";
+            this.Navigation.PushAsync(new ChatPage(e.SelectedItem.ToString()));
         }
     }
 }
